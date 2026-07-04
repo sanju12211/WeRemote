@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WeRemote</string>
+    <string name="my_home">My Home</string>
+    <string name="ir_remote">IR Remote</string>
+    <string name="add_hint">Add IR Remote Control to control a variety of devices at will.</string>
+    <string name="add_device">Add Device</string>
+    <string name="select_type">Select Device Type</string>
+    <string name="select_brand">Select Device Brand</string>
+    <string name="add_remote">Add Remote Control</string>
+    <string name="search_brands">Search for device brands</string>
+    <string name="me">Me</string>
+    <string name="home">Home</string>
+    <string name="messages">Messages</string>
+    <string name="about">About</string>
+</resources>

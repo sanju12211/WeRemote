@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="14dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_circle_white"
+            android:padding="10dp"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Remote"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="30dp">
+
+            <!-- Power / Source / Mute -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView android:id="@+id/btnPower" style="@style/Key"
+                    android:foreground="@drawable/ic_power"
+                    android:foregroundGravity="center"
+                    android:backgroundTint="#FFE2E6" />
+                <TextView android:id="@+id/btnSource" style="@style/Key" android:text="SRC" />
+                <TextView android:id="@+id/btnMute" style="@style/Key" android:text="🔇" />
+            </LinearLayout>
+
+            <!-- D-pad -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_dpad"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <TextView android:id="@+id/btnUp" style="@style/DKey" android:text="▲" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <TextView android:id="@+id/btnLeft" style="@style/DKey" android:text="◄" />
+                    <TextView android:id="@+id/btnOk" style="@style/DKey" android:text="OK"
+                        android:background="@drawable/bg_circle_blue" android:textColor="@color/white" />
+                    <TextView android:id="@+id/btnRight" style="@style/DKey" android:text="►" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <TextView android:id="@+id/btnDown" style="@style/DKey" android:text="▼" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Volume / Channel rockers -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/Rocker">
+                    <TextView android:id="@+id/btnVolUp" style="@style/RKey" android:text="VOL +" />
+                    <TextView style="@style/RLabel" android:text="VOL" />
+                    <TextView android:id="@+id/btnVolDown" style="@style/RKey" android:text="VOL −" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Rocker">
+                    <TextView android:id="@+id/btnChUp" style="@style/RKey" android:text="CH +" />
+                    <TextView style="@style/RLabel" android:text="CH" />
+                    <TextView android:id="@+id/btnChDown" style="@style/RKey" android:text="CH −" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Menu / Home / Back / Exit / Info -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <TextView android:id="@+id/btnMenu" style="@style/SmallKey" android:text="MENU" />
+                <TextView android:id="@+id/btnHome" style="@style/SmallKey" android:text="HOME" />
+                <TextView android:id="@+id/btnBackKey" style="@style/SmallKey" android:text="BACK" />
+                <TextView android:id="@+id/btnExit" style="@style/SmallKey" android:text="EXIT" />
+                <TextView android:id="@+id/btnInfo" style="@style/SmallKey" android:text="INFO" />
+            </LinearLayout>
+
+            <!-- Digits -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
+
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                    <TextView android:id="@+id/btn1" style="@style/Key" android:text="1" />
+                    <TextView android:id="@+id/btn2" style="@style/Key" android:text="2" />
+                    <TextView android:id="@+id/btn3" style="@style/Key" android:text="3" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                    <TextView android:id="@+id/btn4" style="@style/Key" android:text="4" />
+                    <TextView android:id="@+id/btn5" style="@style/Key" android:text="5" />
+                    <TextView android:id="@+id/btn6" style="@style/Key" android:text="6" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                    <TextView android:id="@+id/btn7" style="@style/Key" android:text="7" />
+                    <TextView android:id="@+id/btn8" style="@style/Key" android:text="8" />
+                    <TextView android:id="@+id/btn9" style="@style/Key" android:text="9" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <TextView android:id="@+id/btn0" style="@style/Key" android:text="0" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
