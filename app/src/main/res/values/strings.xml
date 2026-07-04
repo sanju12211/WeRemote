@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WeRemote</string>
+    <string name="app_name">bal-IR-remote</string>
     <string name="my_home">My Home</string>
     <string name="ir_remote">IR Remote</string>
     <string name="add_hint">Add IR Remote Control to control a variety of devices at will.</string>
