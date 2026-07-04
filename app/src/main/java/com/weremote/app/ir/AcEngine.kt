@@ -22,6 +22,9 @@ object AcEngine {
         AcProto.KELVINATOR -> "Kelvinator"
         AcProto.LG -> "LG"
         AcProto.HISENSE -> "Hisense"
+        AcProto.PANASONIC -> "Panasonic"
+        AcProto.TOSHIBA -> "Toshiba"
+        AcProto.FUJITSU -> "Fujitsu"
     }
 
     fun signal(p: AcProto, s: AcState): IrSignal = when (p) {
@@ -34,6 +37,9 @@ object AcEngine {
         AcProto.KELVINATOR -> PulseAc.kelvinator(s)
         AcProto.LG -> PulseAc.lg(s)
         AcProto.HISENSE -> PulseAc.hisense(s)
+        AcProto.PANASONIC -> PulseAc.panasonic(s)
+        AcProto.TOSHIBA -> PulseAc.toshiba(s)
+        AcProto.FUJITSU -> PulseAc.fujitsu(s)
     }
 }
 
@@ -132,6 +138,41 @@ object PulseAc {
             (t(s) - 16) or (fan shl 4), 0x00, 0x00, 0x00)
         b[7] = sum(b, 7)
         return frame(38000, 8100, 4000, 600, 1650, 550, b, false, 5000)
+    }
+
+    fun panasonic(s: AcState): IrSignal {
+        val mode = intArrayOf(0x0, 0x3, 0x2, 0x6, 0x4)[s.mode.coerceIn(0, 4)]
+        val fan = intArrayOf(0xA, 0x3, 0x5, 0x7)[s.fan.coerceIn(0, 3)]
+        // Panasonic AC frames start with a fixed 8-byte prefix.
+        val b = intArrayOf(0x02, 0x20, 0xE0, 0x04, 0x00, 0x00, 0x00, 0x06,
+            0x02, 0x20, 0xE0, 0x04, 0x00,
+            (mode shl 4) or (if (s.power) 0x01 else 0),
+            (t(s) shl 1), 0x80, (fan shl 4) or 0x0F, 0x00, 0x00, 0x00)
+        b[19] = sum(b, 19)
+        return frame(36700, 3456, 1728, 432, 1296, 432, b, true, 10000)
+    }
+
+    fun toshiba(s: AcState): IrSignal {
+        val mode = intArrayOf(0x0, 0x1, 0x2, 0x4, 0x3)[s.mode.coerceIn(0, 4)]
+        val fan = intArrayOf(0x0, 0x2, 0x4, 0x6)[s.fan.coerceIn(0, 3)]
+        val b = intArrayOf(0xF2, 0x0D, 0x03, 0xFC, 0x01,
+            (t(s) - 17) shl 4, (mode) or (fan shl 5), if (s.power) 0x00 else 0x07, 0x00)
+        // checksum = XOR of first 8 bytes
+        var x = 0; for (i in 0 until 8) x = x xor b[i]; b[8] = x and 0xFF
+        return frame(38000, 4400, 4300, 543, 1623, 472, b, false, 7400)
+    }
+
+    fun fujitsu(s: AcState): IrSignal {
+        val mode = intArrayOf(0x0, 0x1, 0x2, 0x3, 0x4)[s.mode.coerceIn(0, 4)]
+        val fan = intArrayOf(0x0, 0x4, 0x3, 0x1)[s.fan.coerceIn(0, 3)]
+        if (!s.power) {
+            val off = intArrayOf(0x14, 0x63, 0x00, 0x10, 0x10, 0x02, 0xFD)
+            return frame(38000, 3324, 1574, 448, 1182, 390, off, true, 8000)
+        }
+        val b = intArrayOf(0x14, 0x63, 0x00, 0x10, 0x10, 0xFE, 0x09, 0x30,
+            (t(s) - 16) shl 4 or 0x01, mode, fan, 0x00, 0x00, 0x00, 0x20, 0x00)
+        b[15] = (0x9E - sum(b, 15)) and 0xFF
+        return frame(38000, 3324, 1574, 448, 1182, 390, b, true, 8000)
     }
 }
 

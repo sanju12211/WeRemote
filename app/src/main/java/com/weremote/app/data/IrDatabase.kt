@@ -65,6 +65,29 @@ object IrDatabase {
         )
     )
 
+    // Philips TV uses the RC5 protocol (14-bit frames: 0x3000 | command).
+    private val philipsTv = Brand(
+        "Philips", mapOf(
+            Fn.POWER to rc5(12), Fn.MUTE to rc5(13),
+            Fn.VOL_UP to rc5(16), Fn.VOL_DOWN to rc5(17),
+            Fn.CH_UP to rc5(32), Fn.CH_DOWN to rc5(33),
+            Fn.MENU to rc5(82),
+            Fn.D1 to rc5(1), Fn.D2 to rc5(2), Fn.D3 to rc5(3), Fn.D4 to rc5(4),
+            Fn.D5 to rc5(5), Fn.D6 to rc5(6), Fn.D7 to rc5(7), Fn.D8 to rc5(8),
+            Fn.D9 to rc5(9), Fn.D0 to rc5(0)
+        )
+    )
+
+    // Toshiba TV (NEC).
+    private val toshibaTv = Brand(
+        "Toshiba", mapOf(
+            Fn.POWER to nec(0x02FD48B7),
+            Fn.VOL_UP to nec(0x02FD58A7), Fn.VOL_DOWN to nec(0x02FD7887),
+            Fn.CH_UP to nec(0x02FD28D7), Fn.CH_DOWN to nec(0x02FDA857),
+            Fn.MUTE to nec(0x02FD6897)
+        )
+    )
+
     // Singer TVs (Bangladesh) are OEM sets; NEC is their most common protocol,
     // so we offer the NEC codeset as the first candidate to test.
     private val singerTv = lgTv.copy(name = "Singer")
@@ -73,7 +96,7 @@ object IrDatabase {
     private val otherTv = Brand("Other / Universal", emptyMap(), isUniversal = true)
 
     /** Distinct TV codesets the universal matcher cycles through. */
-    fun tvCodesets(): List<Brand> = listOf(lgTv, samsungTv, sonyTv)
+    fun tvCodesets(): List<Brand> = listOf(lgTv, samsungTv, sonyTv, philipsTv, toshibaTv)
 
     // ---- Air conditioner brands (stateful, Gree protocol) ----------------
 
@@ -84,7 +107,8 @@ object IrDatabase {
     // ---- Device types ----------------------------------------------------
 
     val types: List<DeviceType> = listOf(
-        DeviceType("tv", "TV", R.drawable.ic_tv, listOf(lgTv, samsungTv, singerTv, sonyTv, otherTv)),
+        DeviceType("tv", "TV", R.drawable.ic_tv,
+            listOf(lgTv, samsungTv, singerTv, sonyTv, philipsTv, toshibaTv, otherTv)),
         DeviceType("stb", "Set Top Box", R.drawable.ic_stb, emptyList()),
         DeviceType("ac", "Air Conditioner", R.drawable.ic_ac, listOf(singerAc, greeAc)),
         DeviceType("dvd", "DVD", R.drawable.ic_dvd, emptyList()),
@@ -104,6 +128,8 @@ object IrDatabase {
     private fun nec(value: Long) = IrCode(Proto.NEC, value)
     private fun sam(value: Long) = IrCode(Proto.SAMSUNG, value)
     private fun sony(cmd: Int) = IrCode(Proto.SONY, cmd.toLong(), SONY_TV, 12)
+    // RC5 14-bit frame: start bits (11), toggle 0, address 0, 6-bit command.
+    private fun rc5(cmd: Int) = IrCode(Proto.RC5, (0x3000 or (cmd and 0x3F)).toLong())
 
     // kept for readability of the Samsung POWER line
     private fun nec6(value: Long, sam: Boolean) = if (sam) sam(value) else nec(value)

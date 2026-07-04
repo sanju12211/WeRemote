@@ -57,7 +57,10 @@ object Fn {
 }
 
 /** IR protocol families for stateful air-conditioner remotes. */
-enum class AcProto { GREE, COOLIX, MIDEA, TCL, HAIER, ELECTRA, KELVINATOR, LG, HISENSE }
+enum class AcProto {
+    GREE, COOLIX, MIDEA, TCL, HAIER, ELECTRA, KELVINATOR, LG, HISENSE,
+    PANASONIC, TOSHIBA, FUJITSU
+}
 
 /** One brand/model codeset for a device type. */
 data class Brand(
