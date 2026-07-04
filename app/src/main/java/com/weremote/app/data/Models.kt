@@ -64,7 +64,9 @@ data class Brand(
     val name: String,
     val codes: Map<String, IrCode>,
     /** When non-empty this brand is an air conditioner; each entry is a codeset to test. */
-    val acCandidates: List<AcProto> = emptyList()
+    val acCandidates: List<AcProto> = emptyList(),
+    /** When true, opens a codeset-matching wizard that cycles all codesets of this type. */
+    val isUniversal: Boolean = false
 ) {
     fun code(fn: String): IrCode? = codes[fn]
     val isAc: Boolean get() = acCandidates.isNotEmpty()

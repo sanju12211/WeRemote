@@ -69,6 +69,12 @@ object IrDatabase {
     // so we offer the NEC codeset as the first candidate to test.
     private val singerTv = lgTv.copy(name = "Singer")
 
+    // "Other / Universal" opens a wizard that cycles every TV codeset.
+    private val otherTv = Brand("Other / Universal", emptyMap(), isUniversal = true)
+
+    /** Distinct TV codesets the universal matcher cycles through. */
+    fun tvCodesets(): List<Brand> = listOf(lgTv, samsungTv, sonyTv)
+
     // ---- Air conditioner brands (stateful, Gree protocol) ----------------
 
     private val acCodesets = AcProto.values().toList()
@@ -78,7 +84,7 @@ object IrDatabase {
     // ---- Device types ----------------------------------------------------
 
     val types: List<DeviceType> = listOf(
-        DeviceType("tv", "TV", R.drawable.ic_tv, listOf(lgTv, samsungTv, singerTv, sonyTv)),
+        DeviceType("tv", "TV", R.drawable.ic_tv, listOf(lgTv, samsungTv, singerTv, sonyTv, otherTv)),
         DeviceType("stb", "Set Top Box", R.drawable.ic_stb, emptyList()),
         DeviceType("ac", "Air Conditioner", R.drawable.ic_ac, listOf(singerAc, greeAc)),
         DeviceType("dvd", "DVD", R.drawable.ic_dvd, emptyList()),

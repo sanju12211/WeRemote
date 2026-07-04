@@ -65,8 +65,11 @@ class BrandActivity : AppCompatActivity() {
             val brand = items[position]
             holder.v.name.text = brand.name
             holder.v.root.setOnClickListener {
-                val target = if (brand.isAc) AcMatchActivity::class.java
-                else MatchActivity::class.java
+                val target = when {
+                    brand.isUniversal -> TvMatchActivity::class.java
+                    brand.isAc -> AcMatchActivity::class.java
+                    else -> MatchActivity::class.java
+                }
                 startActivity(
                     Intent(this@BrandActivity, target)
                         .putExtra(EXTRA_TYPE, typeId)

@@ -31,6 +31,7 @@
         <activity android:name=".ui.BrandActivity" android:exported="false" />
         <activity android:name=".ui.MatchActivity" android:exported="false" />
         <activity android:name=".ui.RemoteActivity" android:exported="false" />
+        <activity android:name=".ui.TvMatchActivity" android:exported="false" />
         <activity android:name=".ui.AcMatchActivity" android:exported="false" />
         <activity android:name=".ui.AcRemoteActivity" android:exported="false" />
 
